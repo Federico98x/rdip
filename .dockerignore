@@ -1,0 +1,66 @@
+# Dependencies
+node_modules/
+.next/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+.eggs/
+dist/
+build/
+venv/
+.venv/
+env/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Git
+.git/
+.gitignore
+
+# Tests
+tests/
+test_*.py
+pytest.ini
+.pytest_cache/
+
+# Docs
+*.md
+LICENSE
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Streamlit (not needed for API)
+Dockerfile.streamlit
+ui/
+
+# Scripts
+scripts/
+setup_project.sh
+
+# Frontend (separate deployment)
+src/
+public/
+*.config.ts
+*.config.mjs
+*.config.js
+tsconfig.json
+components.json
+bun.lock
+package.json
+
+# Docker compose (not for Railway)
+docker-compose.yml
