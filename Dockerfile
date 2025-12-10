@@ -23,19 +23,19 @@ RUN pip install --no-cache-dir --user -r requirements.txt
 # ==========================================
 FROM python:3.11.9-slim as runtime
 
+# Create non-root user for security FIRST
+RUN useradd --create-home --shell /bin/bash appuser
+
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     PYTHONPATH=/app \
-    PATH="/root/.local/bin:$PATH"
+    PATH="/home/appuser/.local/bin:$PATH"
 
 WORKDIR /app
 
-# Copy installed packages from builder
-COPY --from=builder /root/.local /root/.local
-
-# Create non-root user for security
-RUN useradd --create-home --shell /bin/bash appuser
+# Copy installed packages from builder to appuser's home
+COPY --from=builder --chown=appuser:appuser /root/.local /home/appuser/.local
 
 # Create data directory for cache files
 RUN mkdir -p /app/data && chown -R appuser:appuser /app
