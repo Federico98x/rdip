@@ -1,0 +1,6 @@
+import requests
+
+url = "https://www.reddit.com/r/technology/comments/1h9v3fg/sam_altman_says_ai_will_do_more_and_more_of_the/"
+r = requests.post('http://localhost:8000/v1/analyze', json={'url': url})
+print(f"Status: {r.status_code}")
+print(f"Response: {r.text[:1000]}")

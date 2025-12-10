@@ -1,0 +1,51 @@
+# RDIP v1.3.0 - Docker Compose Configuration
+# Reddit Deep Intelligence Platform
+
+version: '3.8'
+
+services:
+  # Backend API Service
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: rdip-api
+    ports:
+      - "8000:8000"
+    environment:
+      - REDDIT_CLIENT_ID=${REDDIT_CLIENT_ID}
+      - REDDIT_CLIENT_SECRET=${REDDIT_CLIENT_SECRET}
+      - GROQ_API_KEY=${GROQ_API_KEY}
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+      - API_HOST=0.0.0.0
+      - API_PORT=8000
+      - LOG_LEVEL=INFO
+      - LOG_FORMAT=json
+    volumes:
+      - rdip-data:/app/data
+    healthcheck:
+      test: ["CMD", "python", "-c", "import httpx; httpx.get('http://localhost:8000/v1/health', timeout=5.0)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
+
+  # Frontend Streamlit Service
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.streamlit
+    container_name: rdip-frontend
+    ports:
+      - "8501:8501"
+    environment:
+      - API_URL=http://api:8000
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  rdip-data:
+    driver: local
