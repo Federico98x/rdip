@@ -310,7 +310,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0a0f] text-slate-100 flex flex-col selection:bg-cyan-500/30">
+    <div className="min-h-screen min-h-[100dvh] bg-[#0a0a0f] text-slate-100 flex flex-col selection:bg-cyan-500/30">
       <div className="fixed inset-0 z-0 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-[#0f0f1a] via-[#0a0a0f] to-[#050508]" />
         <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-cyan-500/5 rounded-full blur-[120px]" />
@@ -318,48 +318,48 @@ export default function Home() {
         <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-[0.02]" />
       </div>
       
-      <header className="fixed top-0 w-full z-50 border-b border-white/[0.06] bg-[#0a0a0f]/80 backdrop-blur-xl">
-        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+      <header className="fixed top-0 w-full z-50 border-b border-white/[0.06] bg-[#0a0a0f]/80 backdrop-blur-xl pt-[env(safe-area-inset-top)]">
+        <div className="container mx-auto px-4 h-14 sm:h-16 flex items-center justify-between">
           <div 
-            className="flex items-center gap-3 cursor-pointer group" 
+            className="flex items-center gap-2 sm:gap-3 cursor-pointer group" 
             onClick={() => { handleViewChange('analyze'); setResult(null); setTrendingResult(null); }}
           >
             <div className="relative">
               <div className="absolute inset-0 bg-cyan-400/30 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="relative bg-gradient-to-br from-cyan-500 to-blue-600 p-2.5 rounded-xl shadow-lg shadow-cyan-500/20">
-                <Brain className="h-5 w-5 text-white" />
+              <div className="relative bg-gradient-to-br from-cyan-500 to-blue-600 p-2 sm:p-2.5 rounded-xl shadow-lg shadow-cyan-500/20">
+                <Brain className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
               </div>
             </div>
-            <span className="text-xl font-bold tracking-tight text-white">RDIP</span>
+            <span className="text-lg sm:text-xl font-bold tracking-tight text-white">RDIP</span>
           </div>
           
           <nav className="flex items-center gap-1 p-1 bg-white/[0.03] border border-white/[0.06] rounded-xl">
             <button
               onClick={() => handleViewChange('analyze')}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+              className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
                 viewMode === 'analyze' 
                   ? 'bg-cyan-500/20 text-cyan-300 shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]' 
                   : 'text-slate-400 hover:text-white hover:bg-white/[0.04]'
               }`}
             >
               <Search className="h-4 w-4" />
-              <span>Analyze</span>
+              <span className="hidden xs:inline">Analyze</span>
             </button>
             <button
               onClick={() => handleViewChange('trending')}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+              className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
                 viewMode === 'trending' 
                   ? 'bg-orange-500/20 text-orange-300 shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]' 
                   : 'text-slate-400 hover:text-white hover:bg-white/[0.04]'
               }`}
             >
               <Flame className="h-4 w-4" />
-              <span>Trending</span>
+              <span className="hidden xs:inline">Trending</span>
             </button>
           </nav>
           
           <div className="flex items-center">
-            <div className={`flex items-center gap-2 px-3 py-1.5 rounded-lg border ${
+            <div className={`flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg border ${
               backendHealth === 'ok' 
                 ? 'bg-emerald-500/10 border-emerald-500/20' 
                 : 'bg-amber-500/10 border-amber-500/20'
@@ -382,7 +382,7 @@ export default function Home() {
         </div>
       </header>
 
-      <main className="flex-1 container mx-auto px-4 py-8 flex flex-col gap-8 max-w-6xl relative z-10 pt-28">
+      <main className="flex-1 container mx-auto px-4 py-8 flex flex-col gap-6 sm:gap-8 max-w-6xl relative z-10 pt-20 sm:pt-28 pb-[calc(env(safe-area-inset-bottom)+2rem)]">
         <AnimatePresence mode="wait">
           {viewMode === 'analyze' && !result && !isAnalyzing && (
             <motion.div 
@@ -393,83 +393,85 @@ export default function Home() {
               transition={{ duration: 0.3, ease: "easeOut" }}
               className="flex flex-col gap-10"
             >
-              <section className="flex flex-col items-center text-center gap-6 max-w-3xl mx-auto">
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/20">
-                  <Sparkles className="h-4 w-4 text-cyan-400" />
-                  <span className="text-cyan-300 text-sm font-medium">AI-Powered Analysis</span>
-                </div>
-                
-                <h1 className="text-4xl sm:text-6xl font-bold tracking-tight leading-[1.1]">
-                  <span className="text-white">Unlock Reddit&apos;s</span>
-                  <br />
-                  <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-violet-400 bg-clip-text text-transparent">
-                    Hidden Insights
-                  </span>
-                </h1>
-                
-                <p className="text-lg text-slate-400 max-w-xl leading-relaxed">
-                  Transform chaotic discussions into structured, actionable intelligence.
-                </p>
-              </section>
-
-              <div className="w-full max-w-2xl mx-auto space-y-6">
-                <form onSubmit={handleAnalyze} className="relative">
-                  <div className="absolute -inset-[1px] bg-gradient-to-r from-cyan-500/50 via-blue-500/50 to-violet-500/50 rounded-2xl blur-sm opacity-0 group-hover:opacity-100 transition-opacity" />
-                  <div className="relative flex gap-3 p-3 bg-[#111118] border border-white/[0.08] rounded-2xl shadow-2xl shadow-black/50">
-                    <div className="pl-3 flex items-center pointer-events-none">
-                      <Search className="h-5 w-5 text-slate-500" />
-                    </div>
-                    <Input 
-                      value={url}
-                      onChange={(e) => setUrl(e.target.value)}
-                      placeholder="Paste Reddit URL here..." 
-                      className="border-none shadow-none focus-visible:ring-0 bg-transparent h-12 text-base text-white placeholder:text-slate-600"
-                      disabled={isAnalyzing}
-                    />
-                    <Button 
-                      type="submit" 
-                      className="h-12 px-6 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-semibold shadow-lg shadow-cyan-500/25 transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed" 
-                      disabled={isAnalyzing || !url}
-                    >
-                      <span>Analyze</span>
-                      <ArrowRight className="h-4 w-4 ml-2" />
-                    </Button>
+              <section className="flex flex-col items-center text-center gap-4 sm:gap-6 max-w-3xl mx-auto px-2">
+                  <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-cyan-500/10 border border-cyan-500/20">
+                    <Sparkles className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-cyan-400" />
+                    <span className="text-cyan-300 text-xs sm:text-sm font-medium">AI-Powered Analysis</span>
                   </div>
-                </form>
-
-                <div className="flex justify-center gap-6 text-sm">
-                  <label className="flex items-center gap-3 cursor-pointer group">
-                    <Switch 
-                      id="force-refresh" 
-                      checked={forceRefresh} 
-                      onCheckedChange={setForceRefresh} 
-                      className="data-[state=checked]:bg-cyan-500" 
-                    />
-                    <span className="text-slate-400 group-hover:text-slate-200 transition-colors">Fresh Analysis</span>
-                  </label>
-                  <label className="flex items-center gap-3 cursor-pointer group">
-                    <Switch 
-                      id="deep-scan" 
-                      checked={deepScan} 
-                      onCheckedChange={setDeepScan} 
-                      className="data-[state=checked]:bg-cyan-500" 
-                    />
-                    <span className="text-slate-400 group-hover:text-slate-200 transition-colors">Deep Scan</span>
-                  </label>
-                  <label className="flex items-center gap-3 cursor-pointer group" title="Lite mode limits content to avoid API quota issues">
-                    <Switch 
-                      id="lite-mode" 
-                      checked={liteMode} 
-                      onCheckedChange={setLiteMode} 
-                      className="data-[state=checked]:bg-emerald-500" 
-                    />
-                    <span className="text-slate-400 group-hover:text-slate-200 transition-colors flex items-center gap-1.5">
-                      <Zap className="h-3.5 w-3.5" />
-                      Lite Mode
+                  
+                  <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold tracking-tight leading-[1.1]">
+                    <span className="text-white">Unlock Reddit&apos;s</span>
+                    <br />
+                    <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-violet-400 bg-clip-text text-transparent">
+                      Hidden Insights
                     </span>
-                  </label>
+                  </h1>
+                  
+                  <p className="text-base sm:text-lg text-slate-400 max-w-xl leading-relaxed">
+                    Transform chaotic discussions into structured, actionable intelligence.
+                  </p>
+                </section>
+
+                <div className="w-full max-w-2xl mx-auto space-y-4 sm:space-y-6">
+                  <form onSubmit={handleAnalyze} className="relative">
+                    <div className="absolute -inset-[1px] bg-gradient-to-r from-cyan-500/50 via-blue-500/50 to-violet-500/50 rounded-2xl blur-sm opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <div className="relative flex flex-col sm:flex-row gap-2 sm:gap-3 p-2 sm:p-3 bg-[#111118] border border-white/[0.08] rounded-2xl shadow-2xl shadow-black/50">
+                      <div className="flex items-center gap-2 flex-1">
+                        <div className="pl-2 sm:pl-3 flex items-center pointer-events-none">
+                          <Search className="h-5 w-5 text-slate-500" />
+                        </div>
+                        <Input 
+                          value={url}
+                          onChange={(e) => setUrl(e.target.value)}
+                          placeholder="Paste Reddit URL here..." 
+                          className="border-none shadow-none focus-visible:ring-0 bg-transparent h-10 sm:h-12 text-sm sm:text-base text-white placeholder:text-slate-600"
+                          disabled={isAnalyzing}
+                        />
+                      </div>
+                      <Button 
+                        type="submit" 
+                        className="h-10 sm:h-12 px-4 sm:px-6 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-semibold shadow-lg shadow-cyan-500/25 transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed w-full sm:w-auto" 
+                        disabled={isAnalyzing || !url}
+                      >
+                        <span>Analyze</span>
+                        <ArrowRight className="h-4 w-4 ml-2" />
+                      </Button>
+                    </div>
+                  </form>
+
+                  <div className="flex flex-wrap justify-center gap-3 sm:gap-6 text-sm">
+                    <label className="flex items-center gap-2 sm:gap-3 cursor-pointer group">
+                      <Switch 
+                        id="force-refresh" 
+                        checked={forceRefresh} 
+                        onCheckedChange={setForceRefresh} 
+                        className="data-[state=checked]:bg-cyan-500 scale-90 sm:scale-100" 
+                      />
+                      <span className="text-slate-400 group-hover:text-slate-200 transition-colors text-xs sm:text-sm">Fresh</span>
+                    </label>
+                    <label className="flex items-center gap-2 sm:gap-3 cursor-pointer group">
+                      <Switch 
+                        id="deep-scan" 
+                        checked={deepScan} 
+                        onCheckedChange={setDeepScan} 
+                        className="data-[state=checked]:bg-cyan-500 scale-90 sm:scale-100" 
+                      />
+                      <span className="text-slate-400 group-hover:text-slate-200 transition-colors text-xs sm:text-sm">Deep Scan</span>
+                    </label>
+                    <label className="flex items-center gap-2 sm:gap-3 cursor-pointer group" title="Lite mode limits content to avoid API quota issues">
+                      <Switch 
+                        id="lite-mode" 
+                        checked={liteMode} 
+                        onCheckedChange={setLiteMode} 
+                        className="data-[state=checked]:bg-emerald-500 scale-90 sm:scale-100" 
+                      />
+                      <span className="text-slate-400 group-hover:text-slate-200 transition-colors flex items-center gap-1 text-xs sm:text-sm">
+                        <Zap className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
+                        Lite
+                      </span>
+                    </label>
+                  </div>
                 </div>
-              </div>
             </motion.div>
           )}
 
