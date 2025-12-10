@@ -41,8 +41,8 @@ RUN useradd --create-home --shell /bin/bash appuser
 RUN mkdir -p /app/data && chown -R appuser:appuser /app
 
 # Copy application code
-COPY --chown=appuser:appuser app/ ./app/
-COPY --chown=appuser:appuser ui/ ./ui/
+COPY --chown=appuser:appuser rdip_backend/ ./rdip_backend/
+COPY --chown=appuser:appuser data/ ./data/
 
 # Switch to non-root user
 USER appuser
@@ -55,4 +55,4 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
     CMD python -c "import httpx; httpx.get('http://localhost:8000/v1/health', timeout=5.0)" || exit 1
 
 # Default command: run the API server
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "1"]
+CMD ["uvicorn", "rdip_backend.main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "1"]
