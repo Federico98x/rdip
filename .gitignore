@@ -57,7 +57,8 @@ htmlcov/
 dmypy.json
 
 # Data files (caches)
-data/
+data/*
+!data/.gitkeep
 *.rdb
 *.duckdb
 *.duckdb.wal

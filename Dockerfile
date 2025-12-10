@@ -42,7 +42,6 @@ RUN mkdir -p /app/data && chown -R appuser:appuser /app
 
 # Copy application code
 COPY --chown=appuser:appuser rdip_backend/ ./rdip_backend/
-COPY --chown=appuser:appuser data/ ./data/
 
 # Switch to non-root user
 USER appuser
